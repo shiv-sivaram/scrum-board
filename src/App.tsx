@@ -29,7 +29,7 @@ class App extends Component<AppProps, AppState> {
     
     const boards = this.state.boards.map(board => {
       return (
-        <option value={board.name}>{board.name}</option>
+        <option key={board.name} value={board.name}>{board.name}</option>
       )
     })
 

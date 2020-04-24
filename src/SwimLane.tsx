@@ -27,7 +27,7 @@ const SwimLane = (props: SwimLaneProps) => {
     })
 
     return (
-        <li className="SwimLaneItem">
+        <li key={props.status} className="SwimLaneItem">
             <p>{props.status}</p>
             <ul className="Ticket">{ticketsList}</ul>
         </li>

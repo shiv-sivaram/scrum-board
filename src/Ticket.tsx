@@ -134,7 +134,7 @@ class StatusElement extends Component<StatusElementType, StatusElementState> {
 
     render = () => {
         const statusOptions = this.props.available.map(opt => {
-            return <option value={opt}>{opt}</option>
+            return <option key={opt} value={opt}>{opt}</option>
         })
 
         return(
