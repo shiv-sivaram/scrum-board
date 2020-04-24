@@ -102,8 +102,14 @@ class EditableText extends Component<EditableTextProps, EditableTextState> {
                 </span>
             )
         } else {
+
+            const textStyle = {
+                cursor: "pointer",
+                color: "#2554C7"
+            }
+
             return (
-                <p onClick={this.editTextHandler}>
+                <p style={textStyle} onClick={this.editTextHandler}>
                     {this.props.text}
                 </p>
             )
