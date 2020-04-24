@@ -1,13 +1,16 @@
 import React from 'react'
-import { Ticket } from './Ticket'
 import { summaryTicket as SummaryTicket } from './Ticket'
+import * as Types from './types/Types'
+import "./styles/SwimLane.css"
+import "./styles/Ticket.css"
 
-export type SwimLaneProps = {
+type SwimLaneProps = {
     status: string,
-    tickets: Ticket[]
+    tickets: Types.Ticket[],
+    ticketDetailHandler: (id: string) => void
 }
 
-export const swimLane = (props: SwimLaneProps) => {
+const SwimLane = (props: SwimLaneProps) => {
 
     const ticketsList = props.tickets.map(ticket => {
         return (
@@ -16,17 +19,18 @@ export const swimLane = (props: SwimLaneProps) => {
                     id={ticket.id}
                     name={ticket.name}
                     visible={ticket.visible}
+                    onClick={() => props.ticketDetailHandler(ticket.id)}
                 />
             </li>
         )
     })
 
     return (
-        <div>
+        <li className="SwimLaneItem">
             <p>{props.status}</p>
-            <ul>{ticketsList}</ul>
-        </div>
+            <ul className="Ticket">{ticketsList}</ul>
+        </li>
     )
 }
 
-export default swimLane
+export default SwimLane

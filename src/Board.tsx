@@ -1,68 +1,65 @@
 import React, { Component } from 'react'
-
-import { SwimLaneProps, swimLane as SwimLane } from './SwimLane'
+import SwimLane from './SwimLane'
+import { detailedTicket as DetailedTicket } from './Ticket'
+import './styles/SwimLane.css'
+import * as Types from './types/Types'
 
 type BoardProps = {
-    name: string
+    name: string,
+    swimLanes: Types.SwimLane[]
 }
 
 type BoardState = {
-    swimLanes: SwimLaneProps[]
+    selectedTicket?: Types.Ticket
 }
 
 class Board extends Component<BoardProps, BoardState> {
 
     state: BoardState = {
-        swimLanes: [
-            {
+        selectedTicket: undefined
+    }
+
+    tickeDetailHandler = (id: string) => {
+
+        
+
+        this.setState({
+            selectedTicket: {
+                id: id,
+                name: "Selected ticket name",
+                visible: true,
                 status: "To Do",
-                tickets: [
-                    {
-                        id: "1",
-                        name: "Test 1",
-                        status: "To Do",
-                        description: "Test 1 description",
-                        visible: true
-                    },
-                    {
-                        id: "2",
-                        name: "Test 2",
-                        status: "To Do",
-                        description: "Test 2 description",
-                        visible: true
-                    }
-                ]
-            },
-            {
-                status: "In Progress",
-                tickets: [
-                    {
-                        id: "11",
-                        name: "Test 11",
-                        status: "In Progress",
-                        description: "Test 11 description",
-                        visible: true
-                    }
-                ]
+                description: "Some big description"
             }
-        ]
+        })
     }
 
     render = () => {
 
-        const lanes = this.state.swimLanes.map(lane => {
+        const lanes = this.props.swimLanes.map(lane => {
             return (
                 <SwimLane 
                     status={lane.status}
                     tickets={lane.tickets}
+                    ticketDetailHandler={this.tickeDetailHandler}
                 />
             )
         })
+
         return (
-            <div>
-                {lanes}
-            </div>
-        )
+          <ul className="SwimLane">
+            {lanes}
+            <li>
+              <DetailedTicket
+                id={this.state.selectedTicket?.id}
+                name={this.state.selectedTicket?.name}
+                visible={this.state.selectedTicket?.visible}
+                status={this.state.selectedTicket?.status}
+                description={this.state.selectedTicket?.description}
+              />
+            </li>
+          </ul>
+        );
     }
 }
 

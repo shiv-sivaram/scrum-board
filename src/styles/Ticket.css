@@ -1,0 +1,15 @@
+.Ticket {
+    list-style: none;
+}
+
+.TicketItem {
+
+    border: 1px solid #ccc;
+    color: #333;
+    display: block;
+    margin-top: -1px;
+    position: relative;
+    margin: 10;
+    list-style: none;
+    padding-left: 10px;
+}
