@@ -17,7 +17,6 @@ export interface Board {
     swimLanes: SwimLane[]
 }
 
-
 export const dummyData: Board[] = [
   {
     name: "Bored",
@@ -86,3 +85,5 @@ export const dummyData: Board[] = [
     ],
   }
 ]
+
+export const availableStatuses: string[] = ["To Do", "In progress", "Done"]

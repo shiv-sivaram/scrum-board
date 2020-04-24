@@ -31,46 +31,63 @@ type DetailedTicketProps = {
     name?: string,
     visible?: boolean,
     status?: string,
-    description?: string
+    availableStatuses?: string[],
+    description?: string,
+    ticketEditedHandler: (property: string) => (text: string) => void
 }
 
-export const detailedTicket = (props: DetailedTicketProps) => {
+type DetailedTicketState = {
+}
 
-    if (props.id !== null && props.visible) {
+export class detailedTicket extends Component<DetailedTicketProps, DetailedTicketState> {
+
+  render = () => {
+  
+    if (this.props.id !== null && this.props.visible) {
       return (
         <div>
-          <p>{props.id}</p>
-          <EditableText text={props.name!} />
-          <p>{props.status}</p>
-          <EditableText text={props.description!} />
+          <p>{this.props.id}</p>
+          <EditableText
+            text={this.props.name!}
+            onSave={this.props.ticketEditedHandler("name")}
+          />
+          <StatusElement
+            selected={this.props.status!}
+            available={this.props.availableStatuses!}
+            onChange={this.props.ticketEditedHandler("status")}
+          />
+          <EditableText
+            text={this.props.description!}
+            onSave={this.props.ticketEditedHandler("description")}
+          />
         </div>
       );
     } else {
-        return <div />
+      return <div />;
     }
+  };
 }
 
 type EditableTextProps = {
     text: string,
+    onSave: (text: string) => void
 }
 
 type EditableTextState = {
     isEditing: boolean,
-    text: string
 }
 
 class EditableText extends Component<EditableTextProps, EditableTextState> {
 
     state: EditableTextState = {
-        isEditing: false,
-        text: this.props.text
+        isEditing: false
     }
 
     editTextHandler = () => this.setState({isEditing: true})
     finishedEditingHandler = () => this.setState({isEditing: false})
 
     textChangedHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        this.setState({text: event.target.value})
+        this.props.onSave(event.target.value)
     }
 
     render = () => {
@@ -78,7 +95,7 @@ class EditableText extends Component<EditableTextProps, EditableTextState> {
             return(
                 <span>
                     <input 
-                        defaultValue={this.state.text} 
+                        defaultValue={this.props.text} 
                         onChange={this.textChangedHandler}
                     />
                     <button onClick={this.finishedEditingHandler}>Save</button>
@@ -87,9 +104,40 @@ class EditableText extends Component<EditableTextProps, EditableTextState> {
         } else {
             return (
                 <p onClick={this.editTextHandler}>
-                    {this.state.text}
+                    {this.props.text}
                 </p>
             )
         }
+    }
+}
+
+type StatusElementType = {
+    available: string[],
+    selected: string,
+    onChange: (text: string) => void
+}
+
+type StatusElementState = {
+}
+
+class StatusElement extends Component<StatusElementType, StatusElementState> {
+
+    selectChangedHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+        this.props.onChange(event.target.value)
+    }
+
+    render = () => {
+        const statusOptions = this.props.available.map(opt => {
+            return <option value={opt}>{opt}</option>
+        })
+
+        return(
+            <select
+                value={this.props.selected}
+                onChange={this.selectChangedHandler}
+            >
+                {statusOptions}
+            </select>
+        )
     }
 }

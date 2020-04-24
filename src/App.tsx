@@ -33,12 +33,15 @@ class App extends Component<AppProps, AppState> {
       )
     })
 
+    const availableStatuses = this.state.currentBoard.swimLanes.map(lane => lane.status)
+
     return (
       <div>
         Select board: <select onChange={this.boardSelectedHandler}>{boards}</select>
         <Board 
           name={this.state.currentBoard.name}
           swimLanes={this.state.currentBoard.swimLanes}
+          availableStatuses={availableStatuses}
         />
       </div>
     );

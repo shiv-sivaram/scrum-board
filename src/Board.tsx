@@ -6,7 +6,8 @@ import * as Types from './types/Types'
 
 type BoardProps = {
     name: string,
-    swimLanes: Types.SwimLane[]
+    swimLanes: Types.SwimLane[],
+    availableStatuses: string[]
 }
 
 type BoardState = {
@@ -35,6 +36,10 @@ class Board extends Component<BoardProps, BoardState> {
         })
     }
 
+    ticketEditedHandler = (id: string) => (property: string) => (text: string) => {
+        console.log({id: id, property: property, text: text })
+    }
+
     render = () => {
 
         const lanes = this.props.swimLanes.map(lane => {
@@ -56,7 +61,9 @@ class Board extends Component<BoardProps, BoardState> {
                 name={this.state.selectedTicket?.name}
                 visible={this.state.selectedTicket?.visible}
                 status={this.state.selectedTicket?.status}
+                availableStatuses={this.props.availableStatuses}
                 description={this.state.selectedTicket?.description}
+                ticketEditedHandler={this.ticketEditedHandler(this.state.selectedTicket?.id!)}
               />
             </li>
           </ul>
