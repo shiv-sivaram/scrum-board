@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ChangeEvent } from 'react';
 import Board from './Board'
 import * as Types from './types/Types'
 import './App.css';
@@ -18,12 +18,29 @@ class App extends Component<AppProps, AppState> {
     currentBoard: Types.dummyData[0]
   }
 
+  boardSelectedHandler = (event: ChangeEvent<HTMLSelectElement>) => {
+    const updatedBoard: Types.Board = this.state.boards.find(
+      board => board.name === event.target.value
+    )!
+    this.setState({currentBoard: updatedBoard})
+  }
+
   render = () => {
     
+    const boards = this.state.boards.map(board => {
+      return (
+        <option value={board.name}>{board.name}</option>
+      )
+    })
+
     return (
-      <Board 
-        name={this.state.currentBoard.name}
-        swimLanes={this.state.currentBoard.swimLanes} />
+      <div>
+        Select board: <select onChange={this.boardSelectedHandler}>{boards}</select>
+        <Board 
+          name={this.state.currentBoard.name}
+          swimLanes={this.state.currentBoard.swimLanes}
+        />
+      </div>
     );
   }
 }

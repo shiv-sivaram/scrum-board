@@ -19,17 +19,18 @@ class Board extends Component<BoardProps, BoardState> {
         selectedTicket: undefined
     }
 
-    tickeDetailHandler = (id: string) => {
+    tickeDetailHandler = (id: string, status: string) => {
 
-        
+        const targetLane = this.props.swimLanes.find(lane => lane.status === status)!
+        const targetTicket = targetLane.tickets.find(ticket => ticket.id === id)!
 
         this.setState({
             selectedTicket: {
                 id: id,
-                name: "Selected ticket name",
-                visible: true,
-                status: "To Do",
-                description: "Some big description"
+                name: targetTicket.name,
+                visible: targetTicket.visible,
+                status: targetTicket.status,
+                description: targetTicket.description
             }
         })
     }

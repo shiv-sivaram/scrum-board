@@ -55,4 +55,34 @@ export const dummyData: Board[] = [
       }
     ],
   },
+
+  {
+    name: "Bored 2",
+    swimLanes: [
+      {
+        status: "To Do",
+        tickets: [
+          {
+            id: "100",
+            name: "TODO 1",
+            visible: true,
+            status: "To Do",
+            description: "bla",
+          }
+        ],
+      },
+      {
+        status: "In Progress",
+        tickets: [
+          {
+            id: "1100",
+            name: "Prog 1",
+            visible: true,
+            status: "In Progress",
+            description: "Some big description",
+          }
+        ]
+      }
+    ],
+  }
 ]

@@ -7,7 +7,7 @@ import "./styles/Ticket.css"
 type SwimLaneProps = {
     status: string,
     tickets: Types.Ticket[],
-    ticketDetailHandler: (id: string) => void
+    ticketDetailHandler: (id: string, status: string) => void
 }
 
 const SwimLane = (props: SwimLaneProps) => {
@@ -19,7 +19,8 @@ const SwimLane = (props: SwimLaneProps) => {
                     id={ticket.id}
                     name={ticket.name}
                     visible={ticket.visible}
-                    onClick={() => props.ticketDetailHandler(ticket.id)}
+                    status={ticket.status}
+                    onClick={() => props.ticketDetailHandler(ticket.id, ticket.status)}
                 />
             </li>
         )
