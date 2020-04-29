@@ -2,6 +2,7 @@ import React, { Component, ChangeEvent } from 'react';
 import Board from './Board'
 import * as Types from './types/Types'
 import './App.css';
+import * as Tpe from './types'
 
 type AppState = {
   boards: Types.Board[]
