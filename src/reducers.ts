@@ -3,6 +3,8 @@ import { produce } from 'immer'
 
 
 const initialState: Types.AppState = {
+
+    // TODO: Call GraphQL to fetch initial state
     boards: [{
         id: "1",
         name: "One"
@@ -13,6 +15,7 @@ const initialState: Types.AppState = {
 
 function createTicket(state: Types.AppState, action: Types.CreateTicketAction): Types.AppState {
 
+    // TODO: Call GraphQL to create a ticket
     const ticket: Types.Ticket = {
         id: `${Date.now()}`,
         name: action.name,
@@ -45,6 +48,7 @@ function updateTicket(state: Types.AppState, action: Types.UpdateTicketAction): 
                 ticket.description !== action.description ||
                 ticket.status !== action.status
            ) {
+               // TODO: Call GraphQL to update a ticket
                ticket.name = action.name
                ticket.description = action.description
                ticket.status = action.status
@@ -55,7 +59,7 @@ function updateTicket(state: Types.AppState, action: Types.UpdateTicketAction): 
 
 function updateSelectedBoard(state: Types.AppState, boardId: string): Types.AppState {
 
-    // Fetch tickets for the selected board here
+    // TODO: Fetch tickets for the selected board here
     const tickets: Types.Ticket[] = []
 
     return produce(state, (draft: Types.AppState) => {

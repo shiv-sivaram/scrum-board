@@ -1,4 +1,7 @@
 
+
+// Deprecated - use /src/types.ts
+
 export interface Ticket {
     id: string,
     name: string,
