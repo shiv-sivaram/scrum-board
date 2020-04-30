@@ -3,6 +3,7 @@ import { AppStore } from '../redux/store'
 import { Provider } from 'react-redux'
 import BoardSelector from './BoardSelector'
 import BoardCreator from './BoardCreator'
+import TicketPanel from './TicketPanel'
 
 type AppProps = {
     store: AppStore
@@ -16,6 +17,7 @@ const App = (props: AppProps) => {
           <Provider store={props.store}>
             <BoardSelector />
             <BoardCreator />
+            <TicketPanel />
           </Provider>
         </span>
     )

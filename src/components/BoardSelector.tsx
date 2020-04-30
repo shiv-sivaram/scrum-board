@@ -1,16 +1,17 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent, useEffect, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
-import { fetchBoards } from '../redux/actions'
+import { fetchBoards, fetchTickets } from '../redux/actions'
 import { AppState, Board } from '../types'
 import '../css/BoardSelector.css'
 
-
 const mapDispatch = {
-    fetchBoards: () => fetchBoards()
+    fetchBoards: () => fetchBoards(),
+    fetchTickets: (boardId: string) => fetchTickets(boardId)
 }
 
 type DispatchProps = {
     fetchBoards: () => void
+    fetchTickets: (boardId: string) => void
 }
 
 type StateProps = {
@@ -33,16 +34,20 @@ const BoardSelector: FunctionComponent<Props> = (props: Props) => {
         props.fetchBoards()
     }, [])
 
+    const handleChange = (event: ChangeEvent<HTMLSelectElement>): void => {
+        props.fetchTickets(event.target.value)
+    }
+ 
     if (props.boards.length > 0) {
 
         const selectOptions = props.boards.map(board => {
-            return <option key={board.id} id={board.id}>{board.name}</option>
+            return <option key={board.id} value={board.id}>{board.name}</option>
         })
 
         return (
             <div>
                 <p>Select Board</p>
-                <select>{selectOptions}</select>
+                <select onChange={handleChange}>{selectOptions}</select>
             </div>
         )
     } else {

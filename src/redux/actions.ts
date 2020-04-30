@@ -4,35 +4,10 @@ import * as Types from '../types'
 import { ApiClient } from '../api/ApiClient'
 import * as Constants from '../constants'
 
-export function createTicket(name: string, description: string): Types.BoardActionTypes {
+export function receiveTickets(tickets: Types.Ticket[]): Types.BoardActionTypes {
     return {
-        type: Types.CREATE_TICKET,
-        name,
-        description
-    }
-}
-
-export function editTicket(ticketId: string): Types.BoardActionTypes {
-    return {
-        type: Types.EDIT_TICKET,
-        id: ticketId
-    }
-}
-
-export function updateTicket(ticketId: string, name: string, description: string, status: string): Types.BoardActionTypes {
-    return {
-        type: Types.UPDATE_TICKET,
-        id: ticketId,
-        name,
-        description,
-        status
-    }
-}
-
-export function selectBoard(boardId: string): Types.BoardActionTypes {
-    return {
-        type: Types.SELECT_BOARD,
-        id: boardId
+        type: Types.RECEIVE_TICKETS,
+        tickets
     }
 }
 
@@ -91,5 +66,20 @@ export const createNewBoard = (name: string) => {
         } catch (error) {
             throw error
         }
+    }
+}
+
+export const fetchTickets = (boardId: string) => {
+    return function (
+        dispatch: ThunkDispatch<{}, {}, AnyAction>,
+        getState: () => Types.AppState,
+        { apiClient }: { apiClient: ApiClient }
+    ) {
+        return apiClient.getTickets(Constants.ORGANISATION_ID, boardId).then((result) => {
+            if (result.result) {
+                dispatch(receiveTickets(result.result))
+            }
+            else if (result.error) throw result.error
+        })
     }
 }

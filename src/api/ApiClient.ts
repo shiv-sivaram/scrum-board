@@ -9,4 +9,6 @@ export type ApiClientResult<T> = {
 export interface ApiClient {
     getBoards: (organisationId: string) => Promise<ApiClientResult<Types.Board[]>>
     createBoard: (organisationId: string, name: string) => Promise<ApiClientResult<Types.Board>>
+
+    getTickets: (organisationId: string, boardId: string) => Promise<ApiClientResult<Types.Ticket[]>>
 }

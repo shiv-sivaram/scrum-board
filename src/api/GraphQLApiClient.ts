@@ -7,7 +7,6 @@ import ApolloClient, {
     Observable,
 } from 'apollo-boost';
 
-
 async function wrap<T>(
     promise: Promise<ApolloQueryResult<T>>,
     selectData: (a: any) => T
@@ -73,5 +72,22 @@ export class GraphQLApiClient implements ApiClient {
         return {
             result: response.data.putBoard
         }
+    }
+
+    getTickets(organisationId: string, boardId: string): Promise<ApiClientResult<Types.Ticket[]>> {
+        console.log('GraphQLApiClient::getTickets');
+        const queryOptions = {
+            query: Queries.queryBoardGql,
+            errorPolicy: 'all' as ErrorPolicy,
+            variables: {
+                organisationId,
+                boardId
+            }
+        }
+
+        return wrap(
+            this.apolloClient.query(queryOptions),
+            data => data.board.tickets
+        )
     }
 }
