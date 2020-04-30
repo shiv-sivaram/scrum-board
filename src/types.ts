@@ -2,6 +2,9 @@ export const RECEIVE_TICKETS = "RECEIVE_TICKETS"
 export const RECEIVE_BOARDS = "RECEIVE_BOARDS"
 export const RECEIVE_NEW_BOARD = "RECEIVE_NEW_BOARD"
 
+export const RECEIVE_TICKET_UPDATE = "RECEIVE_TICKET_UPDATE"
+export const RECEIVE_TICKET_DELETE = "RECEIVE_TICKET_DELETE"
+
 export const INITIAL_TICKET_STATUS = "To Do"
 
 export interface AppState {
@@ -9,7 +12,6 @@ export interface AppState {
     boards: Board[]
     selectedBoard?: string
     tickets: Ticket[]
-    selectedTicket?: string
 }
 
 export interface Board {
@@ -37,6 +39,7 @@ export interface SelectedBoardState {
 
 export interface ReceiveTicketsAction {
     type: typeof RECEIVE_TICKETS
+    boardId: string
     tickets: Ticket[]
 }
 
@@ -51,7 +54,20 @@ export interface CreateBoardAction {
     name: string
 }
 
+export interface TicketUpdateAction {
+    type: typeof RECEIVE_TICKET_UPDATE
+    ticket: Ticket
+}
+
+export interface TicketDeleteAction {
+    type: typeof RECEIVE_TICKET_DELETE
+    id: string
+}
+
+
 export type BoardActionTypes = 
     ReceiveTicketsAction
     | ReceiveBoardsAction
     | CreateBoardAction
+    | TicketUpdateAction
+    | TicketDeleteAction

@@ -42,25 +42,25 @@ export const queryBoardGql = gql`
     }
 `
 
-export const putTicketGql = gql`
+export const mutationPutTicketGql = gql`
     mutation putTicket($organisationId: ID!, $boardId: ID!, $ticketId: ID $input: TicketInput!) {
         putTicket(organisationId: $organisationId, boardId: $boardId, ticketId: $ticketId, input: $input) {
-        id
-        name
-        description
-        status
-        visible
+            id
+            name
+            description
+            status
+            visible
         }
     }
 `
-export const deleteTicketGql = gql`
+export const mutationDeleteTicketGql = gql`
     mutation deleteTicket($organisationId: ID!, $ticketId: ID!) {
         deleteTicket(organisationId: $organisationId, ticketId: $ticketId) {
-        id
-        name
-        description
-        status
-        visible
+            id
+            name
+            description
+            status
+            visible
         }
     }
 `

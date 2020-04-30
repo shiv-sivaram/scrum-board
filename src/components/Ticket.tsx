@@ -1,12 +1,31 @@
 import React, { FunctionComponent, useState, ChangeEvent } from 'react'
 import * as Types from '../types'
+import { connect } from 'react-redux'
+import { updateTicket, deleteTicket } from '../redux/actions'
 import '../css/Ticket.css'
 
-export type TicketProps = {
+const mapDispatch = {
+    updateTicket: (boardId: string, ticket: Types.Ticket) =>
+        updateTicket(boardId, ticket),
+    
+    deleteTicket: (ticketId: string) =>
+        deleteTicket(ticketId)
+        
+}
+
+type DispatchProps = {
+    updateTicket: (boardId: string, ticket: Types.Ticket) => Promise<void>
+    deleteTicket: (ticketId: string) => Promise<void>
+}
+
+type TicketProps = {
+    boardId: string,
     ticket: Types.Ticket
 }
 
-export const Ticket: FunctionComponent<TicketProps> = (props: TicketProps) => {
+type Props = TicketProps & DispatchProps
+
+const Ticket: FunctionComponent<Props> = (props: Props) => {
 
     const [name, setName] = useState(props.ticket.name)
     const [status, setStatus] = useState(props.ticket.status)
@@ -18,11 +37,19 @@ export const Ticket: FunctionComponent<TicketProps> = (props: TicketProps) => {
     }
 
     const handleUpdate = () => {
-        console.log("update " + props.ticket.id)
+        
+        props.updateTicket(props.boardId, {
+            id: props.ticket.id,
+            name,
+            status,
+            description,
+            visible: true
+        })
     }
     
     const handleDelete = () => {
-        console.log("delete " + props.ticket.id)
+        console.log("Delete " + props.ticket.id)
+        props.deleteTicket(props.ticket.id)
     }
 
     return (
@@ -47,3 +74,5 @@ export const Ticket: FunctionComponent<TicketProps> = (props: TicketProps) => {
         </div>
     )
 }
+
+export default connect(undefined, mapDispatch)(Ticket)

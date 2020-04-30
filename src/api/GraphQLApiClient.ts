@@ -90,4 +90,52 @@ export class GraphQLApiClient implements ApiClient {
             data => data.board.tickets
         )
     }
+
+    async upsertTicket(
+        organisationId: string,
+        boardId: string,
+        name: string,
+        description: string,
+        status: string,
+        ticketId?: string
+    ): Promise<ApiClientResult<Types.Ticket>> {
+        console.log('GraphQLApiClient::upsertTicket');
+        const mutationOptions = {
+            mutation: Queries.mutationPutTicketGql,
+            errorPolicy: 'all' as ErrorPolicy,
+            variables: {
+                organisationId,
+                boardId,
+                ticketId,
+                input: {
+                    name,
+                    description,
+                    status,
+                    visible: true
+                }
+            }
+        }
+
+        const response = await this.apolloClient.mutate(mutationOptions)
+        return {
+            result: response.data.putTicket
+        }
+    }
+
+    async deleteTicket(organisationId: string, ticketId: string): Promise<ApiClientResult<Types.Ticket>> {
+        console.log('GraphQLApiClient::upsertTicket');
+        const mutationOptions = {
+            mutation: Queries.mutationDeleteTicketGql,
+            errorPolicy: 'all' as ErrorPolicy,
+            variables: {
+                organisationId,
+                ticketId
+            }
+        }
+
+        const response = await this.apolloClient.mutate(mutationOptions)
+        return {
+            result: response.data.deleteTicket
+        }
+    }
 }

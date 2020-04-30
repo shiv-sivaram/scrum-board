@@ -11,4 +11,13 @@ export interface ApiClient {
     createBoard: (organisationId: string, name: string) => Promise<ApiClientResult<Types.Board>>
 
     getTickets: (organisationId: string, boardId: string) => Promise<ApiClientResult<Types.Ticket[]>>
+    upsertTicket: (
+        organisationId: string,
+        boardId: string,
+        name: string,
+        description: string,
+        status: string,
+        ticketId?: string
+    ) => Promise<ApiClientResult<Types.Ticket>>
+    deleteTicket: (organisationId: string, ticketId: string) => Promise<ApiClientResult<Types.Ticket>>
 }

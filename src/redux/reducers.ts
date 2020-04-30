@@ -32,6 +32,24 @@ function receiveNewBoard(state: Types.AppState, id: string, name: string): Types
     })
 }
 
+function receiveTicketUpdate(state: Types.AppState, ticket: Types.Ticket): Types.AppState {
+
+    return produce(state, (draft: Types.AppState) => {
+
+        let existingTicket = draft.tickets.find(tkt => tkt.id === ticket.id)
+        existingTicket = ticket
+        return draft
+    })
+}
+
+function receiveTicketDelete(state: Types.AppState, ticketId: string): Types.AppState {
+
+    return produce(state, (draft: Types.AppState) => {
+        draft.tickets = draft.tickets.filter(ticket => ticket.id !== ticketId)
+        return draft
+    })
+}
+
 export function reducer(
     state = initialState,
     action: Types.BoardActionTypes
@@ -47,6 +65,11 @@ export function reducer(
         case Types.RECEIVE_NEW_BOARD:
             return receiveNewBoard(state, action.id, action.name)
 
+        case Types.RECEIVE_TICKET_UPDATE:
+            return receiveTicketUpdate(state, action.ticket)
+
+        case Types.RECEIVE_TICKET_DELETE:
+            return receiveTicketDelete(state, action.id)
         default:
             return state
     }
