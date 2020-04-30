@@ -1,8 +1,8 @@
 import { Store, AnyAction, applyMiddleware, createStore } from 'redux'
-import * as Types from './types'
+import * as Types from '../types'
 import { reducer } from './reducers'
 import thunkMiddleware, { ThunkDispatch } from 'redux-thunk';
-import { ApiClient } from './api/ApiClient';
+import { ApiClient } from '../api/ApiClient';
 
 export interface Services {
     apiClient: ApiClient

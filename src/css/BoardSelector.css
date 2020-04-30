@@ -1,0 +1,11 @@
+p {
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
+    float: left;
+}
+
+select {
+    margin-top: 8px;
+    margin-left: 10px;
+}

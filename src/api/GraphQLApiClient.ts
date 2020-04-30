@@ -55,4 +55,23 @@ export class GraphQLApiClient implements ApiClient {
             data => data.organisation.boards
         )
     }
+
+    async createBoard(organisationId: string, name: string): Promise<ApiClientResult<Types.Board>> {
+        console.log('GraphQLApiClient::createBoard');
+        const mutationOptions = {
+            mutation: Queries.mutationPutBoardGql,
+            errorPolicy: 'all' as ErrorPolicy,
+            variables: {
+                organisationId,
+                input: {
+                    name
+                }
+            }
+        }
+
+        const response = await this.apolloClient.mutate(mutationOptions)
+        return {
+            result: response.data.putBoard
+        }
+    }
 }

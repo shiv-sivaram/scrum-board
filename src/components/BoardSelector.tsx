@@ -1,7 +1,8 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchBoards } from './actions';
-import { AppState, Board } from './types';
+import React, { FunctionComponent, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { fetchBoards } from '../redux/actions'
+import { AppState, Board } from '../types'
+import '../css/BoardSelector.css'
 
 
 const mapDispatch = {
@@ -26,7 +27,7 @@ const mapState = (state: AppState, ownProps: OwnProps) => {
     }
 }
 
-const SimpleApp: FunctionComponent<Props> = (props: Props) => {
+const BoardSelector: FunctionComponent<Props> = (props: Props) => {
 
     useEffect(() => {
         props.fetchBoards()
@@ -40,6 +41,7 @@ const SimpleApp: FunctionComponent<Props> = (props: Props) => {
 
         return (
             <div>
+                <p>Select Board</p>
                 <select>{selectOptions}</select>
             </div>
         )
@@ -48,4 +50,4 @@ const SimpleApp: FunctionComponent<Props> = (props: Props) => {
     }
 };
 
-export default connect(mapState, mapDispatch)(SimpleApp)
+export default connect(mapState, mapDispatch)(BoardSelector)

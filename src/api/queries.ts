@@ -1,25 +1,33 @@
 import { gql } from 'apollo-boost';
 
 export const queryOrgBoardsGql = gql`
-query organisation($organisationId: ID!) {
-    organisation(organisationId: $organisationId) {
-      id
-      name
-      boards {
-        id
-        name
-      }
+    query organisation($organisationId: ID!) {
+        organisation(organisationId: $organisationId) {
+            id
+            name
+            boards {
+                id
+                name
+            }
+        }
     }
-  }
 `
 export const mutationPutBoardGql = gql`
     mutation putBoard($organisationId: ID!, $boardId: ID, $input: BoardInput!) {
         putBoard(organisationId: $organisationId, boardId: $boardId, input: $input) {
-        id
-        name
+            id
+            name
+            createdAt
+            updatedAt
+            tickets {
+                name
+                description
+                status
+            }  
         }
     }
 `
+
 export const queryBoardGql = gql`
     query board($organisationId: ID!, $boardId: ID!) {
         board(organisationId: $organisationId, boardId: $boardId) {

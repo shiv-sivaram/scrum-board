@@ -1,6 +1,5 @@
-import * as Types from './types'
+import * as Types from '../types'
 import { produce } from 'immer'
-
 
 const initialState: Types.AppState = {
 
@@ -75,6 +74,15 @@ function getBoards(state: Types.AppState, boards: Types.Board[]): Types.AppState
     })
 }
 
+function receiveNewBoard(state: Types.AppState, id: string, name: string): Types.AppState {
+
+    return produce(state, (draft: Types.AppState) => {
+        const board: Types.Board = {id, name}
+        draft.boards.push(board)
+        return draft
+    })
+}
+
 export function reducer(
     state = initialState,
     action: Types.BoardActionTypes
@@ -95,6 +103,9 @@ export function reducer(
 
         case Types.RECEIVE_BOARDS:
             return getBoards(state, action.boards)
+
+        case Types.RECEIVE_NEW_BOARD:
+            return receiveNewBoard(state, action.id, action.name)
 
         default:
             return state

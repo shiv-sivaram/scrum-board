@@ -1,20 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './index.css'
-import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
-import * as Store from './store'
+import * as Store from './redux/store'
 import { GraphQLApiClient } from './api/GraphQLApiClient';
-import { apolloClient } from './apollo'
-import SimpleApp from './SimpleApp'
+import { apolloClient } from './api/apollo'
+import App from './components/App'
 
 const store: Store.AppStore = Store.getStore(new GraphQLApiClient(apolloClient))
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <SimpleApp />
-    </Provider>
+    <App store={store} />
   </React.StrictMode>,
   document.getElementById('root')
 );

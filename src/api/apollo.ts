@@ -1,6 +1,6 @@
 import { HttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
-import { AUTH_TOKEN, GRAPHQL_ENDPOINT } from './constants'
+import { AUTH_TOKEN, GRAPHQL_ENDPOINT } from '../constants'
 import { ApolloLink, concat } from 'apollo-link';
 import { InMemoryCache } from 'apollo-boost';
 

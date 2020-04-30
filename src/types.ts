@@ -3,6 +3,7 @@ export const EDIT_TICKET = "EDIT_TICKET"
 export const UPDATE_TICKET = "UPDATE_TICKET"
 export const SELECT_BOARD = "SELECT_BOARD"
 export const RECEIVE_BOARDS = "RECEIVE_BOARDS"
+export const RECEIVE_NEW_BOARD = "RECEIVE_NEW_BOARD"
 
 export const INITIAL_TICKET_STATUS = "To Do"
 
@@ -66,8 +67,15 @@ export interface ReceiveBoardsAction {
     boards: Board[]
 }
 
+export interface CreateBoardAction {
+    type: typeof RECEIVE_NEW_BOARD
+    id: string
+    name: string
+}
+
 export type BoardActionTypes = CreateTicketAction
     | EditTicketAction
     | UpdateTicketAction
     | SelectBoardAction
     | ReceiveBoardsAction
+    | CreateBoardAction
