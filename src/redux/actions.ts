@@ -147,3 +147,35 @@ export const deleteTicket = (ticketId: string) => {
         })
     }
 }
+
+export const createTicket = (boardId: string, name: string, description: string) => {
+
+    return async function (
+        dispatch: ThunkDispatch<{}, {}, AnyAction>,
+        getState: () => Types.AppState,
+        { apiClient }: { apiClient: ApiClient }
+    ): Promise<void> {
+
+        let response
+        try {
+
+            response = await apiClient.upsertTicket(
+                Constants.ORGANISATION_ID,
+                boardId,
+                name,
+                description,
+                Constants.INITIAL_TICKET_STATUS
+            )
+            
+            if (response.result) {
+                dispatch(receiveTicketUpdate(response.result))
+            } else if (response.error) {
+                throw response.error
+            } else {
+                throw new Error('Undefined error')
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+}

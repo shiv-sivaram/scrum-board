@@ -40,6 +40,8 @@ const BoardSelector: FunctionComponent<Props> = (props: Props) => {
  
     if (props.boards.length > 0) {
 
+        // Prepopulate tickets of the first board
+        props.fetchTickets(props.boards[0].id)
         const selectOptions = props.boards.map(board => {
             return <option key={board.id} value={board.id}>{board.name}</option>
         })

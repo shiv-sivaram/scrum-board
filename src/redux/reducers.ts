@@ -7,9 +7,10 @@ const initialState: Types.AppState = {
     tickets: []
 }
 
-function receiveTickets(state: Types.AppState, tickets: Types.Ticket[]): Types.AppState {
+function receiveTickets(state: Types.AppState, tickets: Types.Ticket[], selectedBoard: string): Types.AppState {
 
     return produce(state, (draft: Types.AppState) => {
+        draft.selectedBoard = selectedBoard
         draft.tickets = tickets
         return draft
     })
@@ -37,7 +38,11 @@ function receiveTicketUpdate(state: Types.AppState, ticket: Types.Ticket): Types
     return produce(state, (draft: Types.AppState) => {
 
         let existingTicket = draft.tickets.find(tkt => tkt.id === ticket.id)
-        existingTicket = ticket
+        if (existingTicket === undefined) {
+            draft.tickets.push(ticket)
+        } else {
+            existingTicket = ticket
+        }
         return draft
     })
 }
@@ -57,7 +62,7 @@ export function reducer(
 
     switch (action.type) {
         case Types.RECEIVE_TICKETS:
-            return receiveTickets(state, action.tickets)
+            return receiveTickets(state, action.tickets, action.boardId)
 
         case Types.RECEIVE_BOARDS:
             return getBoards(state, action.boards)

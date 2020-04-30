@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import * as Types from '../types'
 import Ticket from './Ticket'
+import CreateTicket from './CreateTicket'
 
 const mapDispatch = {
 }
@@ -31,12 +32,21 @@ const TicketPanel: FunctionComponent<Props> = (props: Props) => {
     if (props.tickets.length > 0) {
 
         const ticketItems = props.tickets.map(ticket => {
-            return <li key={ticket.id}> <Ticket ticket={ticket} boardId='fds' /> </li>
+            return <li key={ticket.id}> <Ticket ticket={ticket} boardId={props.boardId} /> </li>
         })
+
+        ticketItems.unshift(
+            <li key="createTicket"><CreateTicket boardId={props.boardId} /></li>
+        )
 
         return <ul style={{listStyle: "none"}}> {ticketItems} </ul>
     } else {
-        return <h3>No tickets on this board</h3>
+        return (
+            <div>
+                <h3>No tickets on this board</h3>
+                <CreateTicket boardId={props.boardId} />
+            </div>
+        )
     }
 }
 
