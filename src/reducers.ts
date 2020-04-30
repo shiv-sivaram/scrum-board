@@ -4,12 +4,7 @@ import { produce } from 'immer'
 
 const initialState: Types.AppState = {
 
-    // TODO: Call GraphQL to fetch initial state
-    boards: [{
-        id: "1",
-        name: "One"
-    }],
-    selectedBoardId: "1",
+    boards: [],
     tickets: []
 }
 
@@ -64,9 +59,18 @@ function updateSelectedBoard(state: Types.AppState, boardId: string): Types.AppS
 
     return produce(state, (draft: Types.AppState) => {
 
-        draft.selectedBoardId = boardId
+        draft.selectedBoard = boardId
         draft.tickets = tickets
         draft.selectedTicket = undefined
+        return draft
+    })
+}
+
+function getBoards(state: Types.AppState, boards: Types.Board[]): Types.AppState {
+
+    return produce(state, (draft: Types.AppState) => {
+
+        draft.boards = boards
         return draft
     })
 }
@@ -88,6 +92,9 @@ export function reducer(
 
         case Types.SELECT_BOARD:
             return updateSelectedBoard(state, action.id)
+
+        case Types.RECEIVE_BOARDS:
+            return getBoards(state, action.boards)
 
         default:
             return state

@@ -2,8 +2,17 @@ export const CREATE_TICKET = "CREATE_TICKET"
 export const EDIT_TICKET = "EDIT_TICKET"
 export const UPDATE_TICKET = "UPDATE_TICKET"
 export const SELECT_BOARD = "SELECT_BOARD"
+export const RECEIVE_BOARDS = "RECEIVE_BOARDS"
 
 export const INITIAL_TICKET_STATUS = "To Do"
+
+export interface AppState {
+
+    boards: Board[]
+    selectedBoard?: string
+    tickets: Ticket[]
+    selectedTicket?: string
+}
 
 export interface Board {
     id: string,
@@ -18,9 +27,12 @@ export interface Ticket {
     visible: boolean
 }
 
-export interface AppState {
-    boards: Board[],
-    selectedBoardId: string,
+export interface BoardState {
+    boards: Board[]
+}
+
+export interface SelectedBoardState {
+    selectedBoard: string,
     tickets: Ticket[],
     selectedTicket?: string
 }
@@ -49,7 +61,13 @@ export interface SelectBoardAction {
     id: string
 }
 
+export interface ReceiveBoardsAction {
+    type: typeof RECEIVE_BOARDS
+    boards: Board[]
+}
+
 export type BoardActionTypes = CreateTicketAction
     | EditTicketAction
     | UpdateTicketAction
     | SelectBoardAction
+    | ReceiveBoardsAction
