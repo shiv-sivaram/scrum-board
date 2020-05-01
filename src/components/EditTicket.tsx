@@ -9,8 +9,7 @@ const mapDispatch = {
         updateTicket(boardId, ticket),
     
     deleteTicket: (ticketId: string) =>
-        deleteTicket(ticketId)
-        
+        deleteTicket(ticketId)        
 }
 
 type DispatchProps = {
@@ -25,7 +24,7 @@ type TicketProps = {
 
 type Props = TicketProps & DispatchProps
 
-const Ticket: FunctionComponent<Props> = (props: Props) => {
+const EditTicket: FunctionComponent<Props> = (props: Props) => {
 
     const [name, setName] = useState(props.ticket.name)
     const [status, setStatus] = useState(props.ticket.status)
@@ -75,4 +74,4 @@ const Ticket: FunctionComponent<Props> = (props: Props) => {
     )
 }
 
-export default connect(undefined, mapDispatch)(Ticket)
+export default connect(undefined, mapDispatch)(EditTicket)

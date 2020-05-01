@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
 import * as Types from '../types'
-import Ticket from './Ticket'
+import EditTicket from './EditTicket'
 import CreateTicket from './CreateTicket'
+import { TICKET_STATUSES } from '../constants'
+import SwimLane from './SwimLane'
 
 const mapDispatch = {
 }
@@ -28,22 +30,34 @@ const mapState = (state: Types.AppState, ownProps: OwnProps) => {
 
 const TicketPanel: FunctionComponent<Props> = (props: Props) => {
 
+    // const swimLanes = TICKET_STATUSES.map(status => {
+
+    //     const filteredTickets = props.tickets.filter(ticket => ticket.status === status)
+    //     return (
+    //         <SwimLane name={status} tickets={filteredTickets} />
+    //     )
+    // })
 
     if (props.tickets.length > 0) {
 
         const ticketItems = props.tickets.map(ticket => {
-            return <li key={ticket.id}> <Ticket ticket={ticket} boardId={props.boardId} /> </li>
+            return <li key={ticket.id}> <EditTicket ticket={ticket} boardId={props.boardId} /> </li>
         })
 
         ticketItems.unshift(
             <li key="createTicket"><CreateTicket boardId={props.boardId} /></li>
         )
 
-        return <ul style={{listStyle: "none"}}> {ticketItems} </ul>
+        return (
+            <div>
+                {/* <div>{swimLanes}</div> */}
+                <ul style={{listStyle: "none"}}> {ticketItems} </ul>
+            </div>
+        )
     } else {
         return (
             <div>
-                <h3>No tickets on this board</h3>
+                {/* <div>{swimLanes}</div> */}
                 <CreateTicket boardId={props.boardId} />
             </div>
         )
